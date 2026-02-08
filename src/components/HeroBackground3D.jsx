@@ -7,16 +7,19 @@ const InteractiveParticles = () => {
     const meshRef = useRef();
     const mouseRef = useRef({ x: 0, y: 0 });
 
-    const particleCount = 4000;
+    const particleCount = 5000; // Increased count for density
 
-    const [positions, colors] = useMemo(() => {
+    const [positions, colors, randoms] = useMemo(() => {
         const positions = new Float32Array(particleCount * 3);
         const colors = new Float32Array(particleCount * 3);
-        const color = new THREE.Color("#FF0000"); // Red
+        const randoms = new Float32Array(particleCount); // For individual particle animation offset
+
+        const color1 = new THREE.Color("#FF2E2E"); // Bright Red
+        const color2 = new THREE.Color("#FF5C5C"); // Lighter Red
 
         for (let i = 0; i < particleCount; i++) {
-            // Spherical distribution
-            const r = 1.5 * Math.cbrt(Math.random());
+            // Spherical distribution with some variation
+            const r = 1.8 * Math.cbrt(Math.random());
             const theta = Math.random() * 2 * Math.PI;
             const phi = Math.acos(2 * Math.random() - 1);
 
@@ -28,17 +31,20 @@ const InteractiveParticles = () => {
             positions[i * 3 + 1] = y;
             positions[i * 3 + 2] = z;
 
-            // Varying red shades
-            const shade = Math.random() * 0.5 + 0.5;
-            colors[i * 3] = color.r * shade;
-            colors[i * 3 + 1] = color.g * shade;
-            colors[i * 3 + 2] = color.b * shade;
+            // Gradient mix
+            const mixedColor = color1.clone().lerp(color2, Math.random());
+            colors[i * 3] = mixedColor.r;
+            colors[i * 3 + 1] = mixedColor.g;
+            colors[i * 3 + 2] = mixedColor.b;
+
+            randoms[i] = Math.random();
         }
-        return [positions, colors];
+        return [positions, colors, randoms];
     }, []);
 
     useEffect(() => {
         const handleMouseMove = (event) => {
+            // Normalize mouse position (-1 to 1)
             mouseRef.current.x = (event.clientX / window.innerWidth) * 2 - 1;
             mouseRef.current.y = -(event.clientY / window.innerHeight) * 2 + 1;
         };
@@ -50,20 +56,37 @@ const InteractiveParticles = () => {
     useFrame((state) => {
         const time = state.clock.getElapsedTime();
         const scrollY = window.scrollY;
-
-        // Use simpler transforms or check if visible before updating
+        
         if (meshRef.current) {
             const vh = window.innerHeight;
+            
+            // Mouse Interaction Targets
+            const targetRotX = mouseRef.current.y * 0.2; // Tilt up/down
+            const targetRotY = mouseRef.current.x * 0.2; // Turn left/right
+            const targetPosX = mouseRef.current.x * 0.1; // Parallax X
+            const targetPosY = mouseRef.current.y * 0.1; // Parallax Y
+
+            // Smooth Interpolation (Lerp)
+            meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, targetRotX + (scrollY * 0.0005), 0.05);
+            meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, targetRotY + (time * 0.05), 0.05); // Continuous slow rotation + mouse
+            
+            meshRef.current.position.x = THREE.MathUtils.lerp(meshRef.current.position.x, targetPosX, 0.05);
+            meshRef.current.position.y = THREE.MathUtils.lerp(meshRef.current.position.y, targetPosY, 0.05);
+
+
             // SCALING EFFECT: Starts large and shrinks on scroll
             const targetScale = Math.max(0.6, 2.5 - (scrollY / vh) * 1.0);
-
-            // Limit lerp calculation frequency or complexity if needed? No, standard lerp is cheap.
+            
+            // Add a "breathing" scale effect
+            const breathing = Math.sin(time * 0.5) * 0.05 + 1; 
+            
             const currentScale = meshRef.current.scale.x;
-            const smoothedScale = THREE.MathUtils.lerp(currentScale, targetScale, 0.1);
+            // We want the base scale to be driven by scroll, multiplied by breathing
+            const finalTargetScale = targetScale * breathing;
+            
+            const smoothedScale = THREE.MathUtils.lerp(currentScale, finalTargetScale, 0.1);
 
             meshRef.current.scale.set(smoothedScale, smoothedScale, smoothedScale);
-            meshRef.current.rotation.y = time * 0.1;
-            meshRef.current.rotation.z = scrollY * 0.001;
         }
     });
 
@@ -84,7 +107,7 @@ const InteractiveParticles = () => {
                 />
             </bufferGeometry>
             <pointsMaterial
-                size={0.025} // Slightly larger to compensate for fewer particles
+                size={0.03}
                 vertexColors
                 sizeAttenuation={true}
                 depthWrite={false}
