@@ -1,0 +1,100 @@
+.brand-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-body);
+    user-select: none;
+}
+
+.logo-main {
+    display: flex;
+    gap: 0.2rem;
+    align-items: flex-end;
+}
+
+/* Base styles for geometric letters */
+.logo-main span {
+    font-weight: 900;
+    line-height: 1;
+    display: inline-block;
+}
+
+.brand-logo.light .logo-main span {
+    color: #FFFFFF;
+}
+
+.brand-logo.dark .logo-main span {
+    color: #000000;
+}
+
+/* Recreating the geometric AURAC */
+.logo-main .char-a {
+    width: 1.8rem;
+    height: 1.8rem;
+    background: currentColor;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+    text-indent: -9999px;
+}
+
+.logo-main .char-u {
+    font-size: 1.8rem;
+    letter-spacing: -0.05em;
+    transform: scaleX(1.2);
+    margin: 0 0.2rem;
+}
+
+.logo-main .char-r {
+    font-size: 1.8rem;
+    font-weight: 900;
+}
+
+.logo-main .char-c {
+    width: 1.8rem;
+    height: 1.8rem;
+    background: currentColor;
+    border-radius: 50%;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 35%, 50% 50%, 100% 65%, 100% 100%, 0% 100%);
+    text-indent: -9999px;
+    margin-left: 0.1rem;
+}
+
+.logo-tagline {
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    text-transform: uppercase;
+}
+
+.brand-logo.light .logo-tagline {
+    color: #FFFFFF;
+}
+
+.brand-logo.dark .logo-tagline {
+    color: #000000;
+}
+
+.the-box {
+    background: #FF2E2E;
+    color: #FFFFFF !important;
+    padding: 2px 4px;
+    letter-spacing: 0.1em;
+    font-weight: 900;
+}
+
+/* Navbar specific scaling */
+.navbar .brand-logo {
+    transform: scale(1.2);
+    transform-origin: left center;
+}
+
+/* Footer specific scaling */
+.footer .brand-logo {
+    align-items: flex-start;
+    transform: scale(1.5);
+    transform-origin: left center;
+    margin-bottom: 2rem;
+}

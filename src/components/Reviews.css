@@ -1,0 +1,30 @@
+.reviews-section {
+    padding: 8rem 0;
+    background-color: var(--c-sage);
+    color: var(--c-ivory);
+    text-align: center;
+}
+
+.review-stars {
+    color: var(--c-gold-light);
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    letter-spacing: 0.5em;
+}
+
+.review-quote {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    max-width: 800px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.4;
+}
+
+.review-author {
+    font-family: var(--font-body);
+    font-style: normal;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.8;
+}

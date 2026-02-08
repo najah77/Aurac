@@ -1,0 +1,113 @@
+.section {
+    padding: clamp(3rem, 7vw, 6rem) 0;
+    position: relative;
+    overflow: hidden;
+    /* Prevent child orbs from causing overflow */
+}
+
+.section-header {
+    margin-bottom: clamp(1.5rem, 4vw, 3rem);
+    max-width: 100%;
+}
+
+.section-label {
+    display: block;
+    font-family: var(--font-mono);
+    color: var(--text-tertiary);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.8rem;
+}
+
+.section-title {
+    font-size: clamp(2.2rem, 6vw, 4.2rem);
+    font-weight: 800;
+    max-width: 1100px;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+    color: var(--text-primary);
+}
+
+.big-text {
+    font-size: clamp(1.1rem, 2.2vw, 1.7rem);
+    line-height: 1.5;
+    color: var(--text-secondary);
+    max-width: 900px;
+    margin-bottom: 2rem;
+}
+
+/* About Pillars */
+.pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 2rem;
+}
+
+.pillar h3 {
+    font-size: clamp(1.2rem, 2vw, 1.8rem);
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: -0.02em;
+}
+
+@media (max-width: 768px) {
+    .pillars-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding-top: 2rem;
+    }
+}
+
+/* Themes */
+.section.white-theme {
+    background-color: #FFFFFF;
+    color: #050505;
+}
+
+.clients-section {
+    padding: clamp(2rem, 5vw, 4rem) 0;
+}
+
+.section.white-theme .section-title {
+    color: #050505;
+}
+
+.section.white-theme .section-label {
+    color: #888;
+}
+
+.section.white-theme .big-text {
+    color: #444;
+}
+
+.section.white-theme .pillar h3 {
+    color: #050505;
+}
+
+.section.white-theme .primary-btn {
+    background: #050505;
+    color: #FFFFFF;
+    border: 1px solid #050505;
+}
+
+.section.white-theme .primary-btn:hover {
+    background: transparent;
+    color: #050505;
+}
+
+/* Decorative Elements */
+.white-orb {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+}
+
+.white-line {
+    position: absolute;
+    z-index: 0;
+}

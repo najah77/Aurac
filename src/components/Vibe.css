@@ -1,0 +1,47 @@
+.vibe-section {
+    background: #0a0a0a;
+    padding: 6rem 0;
+    text-align: center;
+}
+
+.vibe-words {
+    margin: 2.5rem auto;
+    display: flex;
+    justify-content: center;
+    gap: clamp(1.5rem, 5vw, 5rem);
+    flex-wrap: wrap;
+    max-width: 1200px;
+}
+
+.vibe-word {
+    font-size: clamp(2rem, 8vw, 6rem);
+    font-weight: 800;
+    color: var(--text-primary);
+    cursor: default;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    transition: color 0.3s ease;
+}
+
+.vibe-word:hover {
+    color: var(--accent-primary);
+}
+
+.vibe-description {
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    color: var(--text-secondary);
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .vibe-section {
+        padding: 6rem 0;
+    }
+
+    .vibe-words {
+        margin: 3rem 0;
+        gap: 1.5rem;
+    }
+}
